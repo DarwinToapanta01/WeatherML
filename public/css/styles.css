@@ -398,3 +398,124 @@ section[id] {
     transition: none;
   }
 }
+
+/* Transiciones y foco accesible */
+.wm-card {
+  border-radius: 16px;
+  overflow: hidden;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.wm-card:focus-within {
+  box-shadow: 0 8px 24px rgba(30, 64, 175, 0.10);
+}
+
+.wm-card-head,
+.wm-card-body {
+  padding: 1.5rem;
+}
+
+.wm-card-head {
+  background: #f8fbff;
+  border-bottom: 1px solid var(--blue-100);
+}
+
+/* Campos de formularios */
+.form-label {
+  font-weight: 600;
+  color: var(--ink-1);
+  margin-bottom: 0.4rem;
+}
+
+.form-control,
+.form-select {
+  min-height: 46px;
+  border-radius: 10px;
+  border-color: #cbd5e1;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--blue-400);
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.15);
+}
+
+/* Botones */
+.btn {
+  border-radius: 10px;
+  font-weight: 600;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--blue-400);
+  outline-offset: 3px;
+}
+
+/* Resultado de una predicción */
+.wm-prediction-result {
+  border: 1px solid var(--blue-100);
+  border-left: 5px solid var(--blue-700);
+  border-radius: 14px;
+  padding: 1.25rem;
+  background: #f8fbff;
+}
+
+.wm-prediction-label {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.wm-prediction-probability {
+  font-size: 0.95rem;
+  color: var(--ink-2);
+}
+
+/* Mensajes y ayuda */
+.wm-help {
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  margin-top: 0.35rem;
+}
+
+.wm-alert {
+  border-radius: 12px;
+}
+
+/* Adaptación a pantallas pequeñas */
+@media (max-width: 576px) {
+  .wm-main {
+    padding-top: 1.25rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .wm-card-head,
+  .wm-card-body {
+    padding: 1rem;
+  }
+
+  .wm-intro .bi {
+    font-size: 2.5rem;
+  }
+}
+
+/* Respeta la preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .wm-card,
+  .btn {
+    transition: none;
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+}
