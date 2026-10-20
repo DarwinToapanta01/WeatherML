@@ -261,6 +261,70 @@
                 <code>{{ results.model_path }}</code>
             </p>
         </section>
+
+    <!--PREDICCIÓN INDIVIDUAL-->
+        {% if prediction_features %}
+        <section class="wm-card mt-4" aria-labelledby="prediction-title">
+            <div class="wm-card-head">
+                <h2 id="prediction-title" class="h5 mb-2">
+                    <i class="bi bi-cloud-sun me-2"></i>
+                    Predicción individual
+                </h2>
+                <p class="wm-muted mb-0">
+                    Introduce los valores de las variables requeridas
+                    para consultar el resultado del modelo entrenado.
+                </p>
+            </div>
+
+            <div class="wm-card-body">
+                <form action="{{ url_for('predict') }}" method="post" aria-describedby="prediction-help">
+                    <p id="prediction-help" class="wm-help mb-3">
+                        Todos los campos son obligatorios. Utiliza valores
+                        compatibles con los datos usados durante el entrenamiento.
+                    </p>
+
+                    <div class="row g-3">
+                        {% for feature in prediction_features %}
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="feature-{{ loop.index }}">
+                                {{ feature | replace('_', ' ') | title }}
+                            </label>
+
+                            <input class="form-control" id="feature-{{ loop.index }}" type="text" name="{{ feature }}"
+                                autocomplete="off" required aria-required="true"
+                                placeholder="Ingresa {{ feature | replace('_', ' ') }}" />
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <button class="btn btn-primary btn-lg w-100 mt-4" type="submit">
+                        <i class="bi bi-magic me-2"></i>
+                        Generar predicción
+                    </button>
+                </form>
+
+                {% if prediction_result %}
+                <div class="wm-prediction-result mt-4" role="status" aria-live="polite">
+                    <p class="text-uppercase small fw-semibold mb-2">
+                        Resultado de la predicción
+                    </p>
+
+                    <div class="wm-prediction-label">
+                        {{ prediction_result.label }}
+                    </div>
+
+                    {% if prediction_result.probability is not none %}
+                    <p class="wm-prediction-probability mt-2 mb-0">
+                        Probabilidad de la clase predicha:
+                        <strong>{{ prediction_result.probability }}%</strong>
+                    </p>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </section>
+        {% endif %}
+
         {% endif %} {% endif %}
     </main>
 
