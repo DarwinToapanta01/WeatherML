@@ -83,16 +83,7 @@ def train():
             y_test
         )
 
-        # Guardar modelo y configuración
-        joblib.dump(
-            {
-                "model": model,
-                "features": list(X.columns),
-                "target": info["target"]
-            },
-            MODEL_PATH
-        )
-
+        # Construcción del diccionario results corrigiendo el uso de len(X.columns)
         results = {
             "rows": len(validated),
             "features": len(X.columns),
@@ -105,6 +96,18 @@ def train():
             "model_path": str(MODEL_PATH)
         }
 
+        # Guardar el modelo, características y resultados en el archivo .joblib
+        joblib.dump(
+            {
+                "model": model,
+                "features": list(X.columns),
+                "target": info["target"],
+                "results": results
+            },
+            MODEL_PATH
+        )
+
+        # Renderizar la vista pasando los parámetros correctamente
         return render_template(
             "index.html",
             results=results,
@@ -166,9 +169,10 @@ def predict():
             "probability": probability
         }
 
+        # Renderizar utilizando los resultados que guardamos en saved["results"]
         return render_template(
             "index.html",
-            results=None,
+            results=saved["results"],
             prediction_features=features,
             prediction_result=prediction_result
         )
